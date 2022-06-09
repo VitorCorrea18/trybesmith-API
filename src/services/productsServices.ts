@@ -1,4 +1,4 @@
-import Iproduct from '../interfaces';
+import { Iproduct } from '../interfaces';
 import { connection, ProductsModel } from '../models';
 
 class ProductsServices {
@@ -9,6 +9,7 @@ class ProductsServices {
   }
 
   public async getAll(): Promise<Iproduct[]> {
+    console.log('products service getAll');
     const products = await this.model.getAll();
 
     return products;
