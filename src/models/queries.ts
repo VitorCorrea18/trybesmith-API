@@ -1,5 +1,5 @@
 const queries = {
-  getAllProducts: 'SELECT * FROM Trybesmith.products',
+  getAllProducts: 'SELECT * FROM Trybesmith.Products',
 };
 
 export default queries;
