@@ -1,2 +1,2 @@
 export { default as ProductValidation } from './Product';
-export default {}; // pleasing lint
+export { default as UserValidation } from './User';
