@@ -1,10 +1,10 @@
 import { Router } from 'express';
-import ProductsController from '../controllers';
+import { ProductsControllers } from '../controllers';
 import { ProductValidation } from '../middlewares';
 
 const productsRouter = Router();
 
-const ProductsCtrl = new ProductsController();
+const ProductsCtrl = new ProductsControllers();
 const ProductVal = new ProductValidation();
 
 productsRouter.get('/', ProductsCtrl.getAll);
