@@ -4,21 +4,17 @@ import { httpStatus } from '../helpers';
 import { IUser, IToken } from '../interfaces';
 
 class UserControllers {
-  services: UserServices;
+  constructor(private service = new UserServices()) {}
 
-  constructor() {
-    this.services = new UserServices();
-  }
-
-  public async create(req: Request, res: Response, next: NextFunction) {
+  public create = async (req: Request, res: Response, next: NextFunction) => {
     const newUser:IUser = req.body;
     try {
-      const result:IToken = await this.services.create(newUser);
+      const result:IToken = await this.service.create(newUser);
       return res.status(httpStatus.CREATED).json(result);
     } catch (err) {
       next(err);
     }
-  }
+  };
 }
 
 export default UserControllers;
