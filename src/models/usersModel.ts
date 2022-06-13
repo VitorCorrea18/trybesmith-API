@@ -17,8 +17,8 @@ class UserModel {
     return insertId;
   }
 
-  public async getUserById(id: number): Promise<IUser[]> {
-    const [user] = await this.connection.execute(queries.getUserById, [id]);
+  public async getUserByName(username: string): Promise<IUser[]> {
+    const [user] = await this.connection.execute(queries.getUserByName, [username]);
     return user as IUser[];
   }
 }
