@@ -25,6 +25,10 @@ class ProductsModel {
     const [productsIds] = await this.connection.execute(queries.getOrderProducts, [id]);
     return productsIds as [IProductId];
   }
+
+  public async updateOrderedProducts(orderId:number, productId:number):Promise<void> {
+    await this.connection.execute(queries.updateOrderedProducts, [orderId, productId]);
+  }
 }
 
 export default ProductsModel;
