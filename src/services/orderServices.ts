@@ -1,5 +1,5 @@
 import { connection, OrdersModel, ProductsModel } from '../models';
-import { IOrder } from '../interfaces';
+import { IOrder, IOrderCreated } from '../interfaces';
 
 class OrderServices {
   public orderModel: OrdersModel;
@@ -20,6 +20,15 @@ class OrderServices {
       const productsIds = arrayIds.map((id) => Number(id));
       return { ...order, productsIds };
     }));
+    return result;
+  }
+
+  public async create(userId:number, productsIds:number[]) {
+    const orderId = await this.orderModel.createOrder(userId);
+    productsIds.forEach(async (productId) => {
+      await this.productModel.updateOrderedProducts(orderId, productId);
+    });
+    const result:IOrderCreated = { userId, productsIds };
     return result;
   }
 }
