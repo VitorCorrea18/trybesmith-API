@@ -15,6 +15,16 @@ class UserControllers {
       next(err);
     }
   };
+
+  public login = async (req: Request, res: Response, next: NextFunction) => {
+    const { username, password } = req.body;
+    try {
+      const result:IToken = await this.service.login(username, password);
+      return res.status(httpStatus.OK).json(result);
+    } catch (err) {
+      next(err);
+    }
+  };
 }
 
 export default UserControllers;
