@@ -7,6 +7,7 @@ const queries = {
     SELECT GROUP_CONCAT(id) as ids
     FROM Trybesmith.Products WHERE orderId = ?`, // https://stackoverflow.com/questions/3812864/concat-the-output-of-the-subquery
   getUserByName: 'SELECT * FROM Trybesmith.Users WHERE username = ?;',
+  createOrder: 'INSERT INTO Orders (userId) VALUES (?);',
 };
 
 export default queries;
