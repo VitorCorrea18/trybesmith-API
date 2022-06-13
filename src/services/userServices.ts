@@ -1,6 +1,6 @@
-import { IUser, IToken } from '../interfaces';
+import { IUser, IToken, ErrorHandler } from '../interfaces';
 import { connection, UserModel } from '../models';
-import { messages } from '../helpers';
+import { httpStatus, messages } from '../helpers';
 import { JWT } from '../utils';
 
 class UserServices {
@@ -22,7 +22,11 @@ class UserServices {
   public async login(username:string, password:string):Promise<IToken> {
     const foundUser = await this.model.getUserByName(username);
     if (!foundUser[0] || foundUser[0].password !== password) {
-      const err = new Error(messages.USER_PASS_INVALID);
+      const err: ErrorHandler = {
+        name: 'unauthorized', // a name is required for the error interface
+        status: httpStatus.UNAUTHORIZED,
+        message: messages.USER_PASS_INVALID,
+      };
       throw err;
     }
     const token = this.jwt.generateToken(foundUser[0]);
