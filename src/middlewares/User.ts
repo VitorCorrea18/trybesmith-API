@@ -1,18 +1,22 @@
 import { NextFunction, Request, Response } from 'express';
 import { httpStatus } from '../helpers';
-import userSchema from '../schemas/userSchema';
 import { IUser } from '../interfaces';
+import userSchema from '../schemas/userSchema';
+import LoginSchema from '../schemas/loginSchema';
 
 class UserValidation {
-  SCHEMA;
+  USER_SCHEMA;
+
+  LOGIN_SCHEMA;
 
   constructor() {
-    this.SCHEMA = userSchema;
+    this.USER_SCHEMA = userSchema;
+    this.LOGIN_SCHEMA = LoginSchema;
   }
 
-  public validateUser = async (req: Request, res: Response, next: NextFunction) => {
+  public validateUser = (req: Request, res: Response, next: NextFunction) => {
     const user: IUser = req.body;
-    const { error } = await this.SCHEMA.validate(user);
+    const { error } = this.USER_SCHEMA.validate(user);
 
     if (error) {
       if (error.message.includes('required')) {
@@ -20,6 +24,15 @@ class UserValidation {
       } else {
         next({ status: httpStatus.UNPROCESSABLE, message: error.message });
       }
+    }
+    next();
+  };
+
+  public validateLogin = (req: Request, res: Response, next: NextFunction) => {
+    const { error } = this.LOGIN_SCHEMA.validate(req.body);
+
+    if (error) {
+      next({ status: httpStatus.BAD_REQUEST, message: error.message });
     }
     next();
   };
