@@ -16,6 +16,11 @@ class UserModel {
       .execute<ResultSetHeader>(queries.createUser, [username, classe, level, password]);
     return insertId;
   }
+
+  public async getUserById(id: number): Promise<IUser[]> {
+    const [user] = await this.connection.execute(queries.getUserById, [id]);
+    return user as IUser[];
+  }
 }
 
 export default UserModel;
