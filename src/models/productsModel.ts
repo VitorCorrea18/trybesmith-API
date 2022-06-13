@@ -1,6 +1,6 @@
 import { Pool } from 'mysql2/promise';
 import { ResultSetHeader } from 'mysql2'; // Interface from mysql2 that includes the insertId
-import { Iproduct } from '../interfaces';
+import { Iproduct, IProductId } from '../interfaces';
 import queries from './queries';
 
 class ProductsModel {
@@ -19,6 +19,11 @@ class ProductsModel {
     const [{ insertId }] = await this.connection
       .execute<ResultSetHeader>(queries.createProduct, [name, amount]);
     return insertId;
+  }
+
+  public async getByOrderProducts(id: number): Promise<IProductId[]> {
+    const [productsIds] = await this.connection.execute(queries.getOrderProducts, [id]);
+    return productsIds as [IProductId];
   }
 }
 
