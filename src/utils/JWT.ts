@@ -15,6 +15,11 @@ class JWT {
     const token = jwt.sign({ data: payload }, jwtSecret, jwtConfig);
     return { token };
   };
+
+  public decodeToken = (token: string) => {
+    const decoded = jwt.verify(token, jwtSecret);
+    return decoded;
+  };
 }
 
 export default JWT;
