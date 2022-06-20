@@ -19,6 +19,11 @@ class UserServices {
     return token;
   }
 
+  public async getUserByName(username:string): Promise<IUser[]> {
+    const user = await this.model.getUserByName(username);
+    return user as IUser[];
+  }
+
   public async login(username:string, password:string) {
     const foundUser = await this.model.getUserByName(username);
     if (!foundUser[0] || foundUser[0].password !== password) {
