@@ -28,7 +28,7 @@ class OrderServices {
     productsIds.forEach(async (productId) => {
       await this.productModel.updateOrderedProducts(orderId, productId);
     });
-    const result:IOrderCreated = { userId, productsIds };
+    const result:IOrderCreated = { userId, products: productsIds };
     return result;
   }
 }
