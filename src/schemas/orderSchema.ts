@@ -6,6 +6,7 @@ const ordersSchema = Joi.object({
     .messages({
       'array.min': '"productsIds" must include only numbers',
     }),
+  userId: Joi.number().min(1).required(),
 });
 
 export default ordersSchema;
