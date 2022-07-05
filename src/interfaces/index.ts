@@ -5,4 +5,5 @@ export { default as IToken } from './tokenInterface';
 export { default as IOrder } from './orderInterface';
 export { default as IProductId } from './producIdInterface';
 export { default as IOrderCreated } from './orderCreatedInterface';
+export { default as INewOrder } from './newOrderInterface';
 export { default as IDecoded } from './decodedInterface';
