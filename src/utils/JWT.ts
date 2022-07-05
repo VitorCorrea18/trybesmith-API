@@ -1,6 +1,7 @@
-import jwt from 'jsonwebtoken';
+import jwt, { JwtPayload } from 'jsonwebtoken';
 import dotenv from 'dotenv';
-import { IUser } from '../interfaces';
+import { IUser, ErrorHandler } from '../interfaces';
+import { httpStatus, messages } from '../helpers';
 
 dotenv.config();
 
@@ -17,8 +18,17 @@ class JWT {
   };
 
   public decodeToken = (token: string) => {
-    const decoded = jwt.verify(token, jwtSecret);
-    return decoded;
+    try {
+      const decoded = jwt.verify(token, jwtSecret) as JwtPayload;
+      return decoded;
+    } catch (error) {
+      const err: ErrorHandler = {
+        name: 'unauthorized', // a name is required for the error interface
+        status: httpStatus.UNAUTHORIZED,
+        message: messages.INVALID_TOKEN,
+      };
+      throw err;
+    }
   };
 }
 
