@@ -5,7 +5,6 @@ import userSchema from '../schemas/userSchema';
 import LoginSchema from '../schemas/loginSchema';
 import { JWT } from '../utils';
 import { UserServices } from '../services';
-// import IDecoded from '../interfaces/decodedInterface';
 
 class UserValidation {
   USER_SCHEMA;
@@ -52,10 +51,14 @@ class UserValidation {
       const error = { status: httpStatus.UNAUTHORIZED, message: messages.TOKEN_NOT_FOUND };
       next(error);
     } else {
-      const decoded = this.jwt.decodeToken(token);
-      const { data } = decoded as IDecoded;
-      const [user] = await this.userServices.getUserByName(data.username);
-      req.body.userId = user.id;
+      try {
+        const decoded = this.jwt.decodeToken(token);
+        const { data } = decoded as IDecoded;
+        const [user] = await this.userServices.getUserByName(data.username);
+        req.body.userId = user.id;
+      } catch (err) {
+        next(err);
+      }
     }
     next();
   };
