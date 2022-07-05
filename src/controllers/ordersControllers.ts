@@ -19,7 +19,7 @@ class OrderControllers {
     const { userId, productsIds } = req.body;
     try {
       const result: IOrderCreated = await this.services.create(userId, productsIds);
-      return res.status(httpStatus.OK).json(result);
+      return res.status(httpStatus.CREATED).json(result);
     } catch (err) {
       next(err);
     }
